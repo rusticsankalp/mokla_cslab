@@ -23,14 +23,31 @@ public:
   {}
 public:
   
-  ENDPOINT("GET", "/languages", root) {
+  ENDPOINT("GET", "languages", getLanguages) {
     auto dto = LanguageDto::createShared();
     dto->id = 2;
-    dto->description = "g++ 14";
+    
     return createDtoResponse(Status::CODE_200, dto);
   }
   
-  // TODO Insert Your endpoints here !!!
+  ENDPOINT("GET", "language/{languageId}", getLanguageById,
+    PATH(Int32, languageId))
+{
+  auto dto = LanguageDto::createShared();
+   if(languageId == 2 )
+   {
+    dto->id = 2;
+    dto->description = "g++ 14";
+   }
+   else if(languageId == 3){
+    dto->id = 3;
+    dto->description = "g++ 13";
+   }
+   else{
+    return createDtoResponse(Status::CODE_410,dto );
+   }
+   return createDtoResponse(Status::CODE_200, dto );
+}
   
 };
 
