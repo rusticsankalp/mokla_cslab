@@ -1,24 +1,9 @@
-#include "./AppComponent.hpp"
+#include "controller/MyController.hpp"
+#include "AppComponent.hpp"
 
 #include "oatpp/network/Server.hpp"
 
 #include <iostream>
-
-
-/** 
- * Custom Request Handler
- */
-class Handler : public oatpp::web::server::HttpRequestHandler {
-  public:
-  
-    /**
-     * Handle incoming request and return outgoing response.
-     */
-    std::shared_ptr<OutgoingResponse> handle(const std::shared_ptr<IncomingRequest>& request) override {
-      return ResponseFactory::createResponse(Status::CODE_200, "Hello World!");
-    }
-  
-  };
 
 void run() {
 
@@ -28,8 +13,8 @@ void run() {
   /* Get router component */
   OATPP_COMPONENT(std::shared_ptr<oatpp::web::server::HttpRouter>, router);
 
-  /* Route GET - "/hello" requests to Handler */
-  router->route("GET", "/hello", std::make_shared<Handler>());
+  /* Create MyController and add all of its endpoints to router */
+  router->addController(std::make_shared<MyController>());
 
   /* Get connection handler component */
   OATPP_COMPONENT(std::shared_ptr<oatpp::network::ConnectionHandler>, connectionHandler);
