@@ -1,4 +1,5 @@
 #include "controller/MyController.hpp"
+#include "controller/LanguageController.hpp"
 #include "AppComponent.hpp"
 
 #include "oatpp/network/Server.hpp"
@@ -15,6 +16,7 @@ void run() {
 
   /* Create MyController and add all of its endpoints to router */
   router->addController(std::make_shared<MyController>());
+  router->addController(std::make_shared<LanguageController>());
 
   /* Get connection handler component */
   OATPP_COMPONENT(std::shared_ptr<oatpp::network::ConnectionHandler>, connectionHandler);

@@ -10,6 +10,24 @@
  *  Data Transfer Object. Object containing fields only.
  *  Used in API for serialization/deserialization and validation
  */
+class LanguageDto : public oatpp::DTO {
+  
+  DTO_INIT(LanguageDto, DTO)
+  
+  DTO_FIELD(Int32, id);
+  DTO_FIELD(String, description);
+  
+};
+
+#include OATPP_CODEGEN_END(DTO)
+
+
+#include OATPP_CODEGEN_BEGIN(DTO)
+
+/**
+ *  Data Transfer Object. Object containing fields only.
+ *  Used in API for serialization/deserialization and validation
+ */
 class MyDto : public oatpp::DTO {
   
   DTO_INIT(MyDto, DTO)
