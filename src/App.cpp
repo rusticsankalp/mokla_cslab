@@ -1,4 +1,4 @@
-
+//:for database:hxx
 #define DATABASE_PGSQL
 
 #include "controller/LanguageController.hpp"
@@ -9,6 +9,7 @@
 #include "model/model.h"
 #include "model/model-odb.hxx"
 #include "db/database.hxx"
+#include <nlohmann/json.hpp>
 
 
 
@@ -65,6 +66,13 @@ int dbTest(int argc,char* argv[])
 
         Language cppLanguage("g++ default", false,ELanguage_code::cpp);
         Language cLanguage = Language{"gcc default", false,ELanguage_code::c};
+
+        nlohmann::json cppJson = cppLanguage;
+        cout<<cppJson.dump();
+
+        //This works ( may not pring in debug_console)
+        std::string t0 = cppJson.dump();
+        cout <<t0;
 
         auto cppLangId = db->persist(cppLanguage);
         auto cLangId = db->persist(cLanguage);

@@ -15,8 +15,10 @@ add_library(${project_name}-lib
 ## link libs
 include(GNUInstallDirs)
 find_package(oatpp 1.4.0 REQUIRED)
+find_package(nlohmann_json 3.11.2 REQUIRED)
 
 target_link_libraries(${project_name}-lib
+        PRIVATE nlohmann_json::nlohmann_json
         PUBLIC oatpp::oatpp
         PUBLIC oatpp::oatpp-test
         odb

@@ -8,6 +8,7 @@
 #include <memory> 
 
 #include <odb/core.hxx>
+#include <nlohmann/json.hpp>
 
 using namespace std;
 
@@ -63,9 +64,12 @@ namespace mokla::model
 
         const ELanguage_code language_code(){ return language_code_;}
         void language_code(ELanguage_code language_code){language_code_ = language_code;}
+        
+      NLOHMANN_DEFINE_TYPE_INTRUSIVE(Language, id_, name_,is_archived_,language_code_)
 
     private:
       friend class odb::access;
+      
 
       #pragma db id auto
       long long id_{};
