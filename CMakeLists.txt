@@ -8,6 +8,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_library(${project_name}-lib
         src/AppComponent.hpp
+        src/model/model-odb.cxx
+        src/db/database.hxx
 )
 
 ## link libs
@@ -17,6 +19,8 @@ find_package(oatpp 1.4.0 REQUIRED)
 target_link_libraries(${project_name}-lib
         PUBLIC oatpp::oatpp
         PUBLIC oatpp::oatpp-test
+        odb
+        odb-pgsql
 )
 
 target_include_directories(${project_name}-lib PUBLIC src)

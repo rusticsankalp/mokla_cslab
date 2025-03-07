@@ -1,9 +1,20 @@
+
+#define DATABASE_PGSQL
+
 #include "controller/LanguageController.hpp"
 #include "AppComponent.hpp"
 
 #include "oatpp/network/Server.hpp"
 
+#include "model/model.h"
+#include "model/model-odb.hxx"
+#include "db/database.hxx"
+
+
+
 #include <iostream>
+using namespace odb::core;
+using namespace mokla::model;
 
 void run() {
 
@@ -32,13 +43,73 @@ void run() {
   server.run();
   
 }
+class MoklaSerializer
+{
+    public:
+    static void print (Language& lang)
+    {
+        cout << endl << "language :: id,name,code:" 
+        << lang.id() << "," 
+        << lang.name()<<','
+        << lang.language_code();
+    }
+};
+
+int dbTest(int argc,char* argv[])
+{
+  try
+  {
+    unique_ptr<database> db (create_database (argc, argv));
+    {
+        transaction t (db->begin());
+
+        Language cppLanguage("g++ default", false,ELanguage_code::cpp);
+        Language cLanguage = Language{"gcc default", false,ELanguage_code::c};
+
+        auto cppLangId = db->persist(cppLanguage);
+        auto cLangId = db->persist(cLanguage);
+
+        t.commit();
+    }
+    /*
+
+    {
+        using query = odb::query<Language>;
+        using result = odb::result<Language>;
+
+        transaction t (db->begin());
+
+        result r (db->query<Language> (query::language_code == ELanguage_code::cpp));
+
+        for (result::iterator i (r.begin ()); i != r.end (); ++i)
+        {
+            MoklaSerializer::print(*i);
+        }
+
+        t.commit ();
+    }
+        */
+    
+  }
+  catch (const odb::exception& e)
+  {
+    cerr <<"Threw exception" << e.what () << endl;
+    return 1;
+  }
+
+  return 0;
+}
+
 
 /**
  *  main
  */
-int main(int argc, const char * argv[]) {
+int main(int argc, char * argv[]) {
 
+  
   oatpp::Environment::init();
+
+  dbTest(argc,argv);
 
   run();
   
