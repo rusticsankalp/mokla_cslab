@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.25)
 
 set(project_name cslab) ## rename your project here
 
@@ -13,12 +13,10 @@ add_library(${project_name}-lib
 ## link libs
 include(GNUInstallDirs)
 find_package(oatpp 1.4.0 REQUIRED)
-include_directories("/usr/include/mariadb")
 
 target_link_libraries(${project_name}-lib
         PUBLIC oatpp::oatpp
         PUBLIC oatpp::oatpp-test
-        mariadbcpp.so
 )
 
 target_include_directories(${project_name}-lib PUBLIC src)
