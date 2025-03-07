@@ -6,9 +6,9 @@
 
 #include "oatpp/network/Server.hpp"
 
-#include "model/model.h"
-#include "model/model-odb.hxx"
-#include "db/database.hxx"
+#include "model.hpp"
+#include "model-odb.hxx"
+#include "database.hxx"
 #include <nlohmann/json.hpp>
 
 

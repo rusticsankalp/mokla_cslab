@@ -1,7 +1,7 @@
 // copyright : not copyrighted - public domain
 
-#ifndef MODELS_H
-#define MODELS_H
+#ifndef MODELS_HPP
+#define MODELS_HPP
 
 #include <vector>
 #include <string>

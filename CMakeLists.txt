@@ -6,6 +6,10 @@ project(${project_name})
 
 set(CMAKE_CXX_STANDARD 17)
 
+include_directories(${INCLUDE_DIR}
+    src/model
+    src/db)
+
 add_library(${project_name}-lib
         src/AppComponent.hpp
         src/model/model-odb.cxx
@@ -28,7 +32,6 @@ target_link_libraries(${project_name}-lib
 target_include_directories(${project_name}-lib PUBLIC src)
 
 ## add executables
-
 add_executable(${project_name}-exe
         src/App.cpp
 )

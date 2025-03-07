@@ -4,8 +4,8 @@
 // compiler for C++.
 //
 
-#ifndef MODEL_ODB_HXX
-#define MODEL_ODB_HXX
+#ifndef MODEL_ODB_H
+#define MODEL_ODB_H
 
 #include <odb/version.hxx>
 
@@ -15,7 +15,7 @@
 
 #include <odb/pre.hxx>
 
-#include "model.hpp"
+#include "model.h"
 
 #include <memory>
 #include <cstddef>
