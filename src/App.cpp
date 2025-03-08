@@ -1,5 +1,4 @@
 //:for database:hxx
-#define DATABASE_PGSQL
 
 #include "controller/LanguageController.hpp"
 #include "AppComponent.hpp"
@@ -10,8 +9,6 @@
 #include "model-odb.hxx"
 #include "database.hxx"
 #include <nlohmann/json.hpp>
-
-
 
 #include <iostream>
 using namespace odb::core;
