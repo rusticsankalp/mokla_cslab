@@ -1,11 +1,22 @@
 #ifndef LanguageController_hpp
 #define LanguageController_hpp
 
+#include <iostream>
+
+#include <memory>
 #include "dto/DTOs.hpp"
+#include "model.hpp"
+#include "model-odb.hxx"
 
 #include "oatpp/web/server/api/ApiController.hpp"
 #include "oatpp/macro/codegen.hpp"
 #include "oatpp/macro/component.hpp"
+#include <odb/database.hxx>
+
+using namespace std;
+using namespace mokla::model;
+using namespace odb::core;
+
 
 #include OATPP_CODEGEN_BEGIN(ApiController) //<-- Begin Codegen
 
@@ -32,22 +43,31 @@ public:
   
   ENDPOINT("GET", "language/{languageId}", getLanguageById,
     PATH(Int32, languageId))
-{
-  auto dto = LanguageDto::createShared();
-   if(languageId == 2 )
-   {
-    dto->id = 2;
-    dto->description = "g++ 14";
-   }
-   else if(languageId == 3){
-    dto->id = 3;
-    dto->description = "g++ 13";
-   }
-   else{
-    return createDtoResponse(Status::CODE_410,dto );
-   }
-   return createDtoResponse(Status::CODE_200, dto );
-}
+  {
+    
+    auto dto = LanguageDto::createShared();
+    //long long langId = languageId.cast<long long>();
+    long long langId = static_cast<long long>(languageId);
+    try
+    {
+      transaction t (database_ ->begin());
+     //lang = make_unique<Language>(database_->load<Language>(languageId));
+     unique_ptr<Language> lang(database_->load<Language>(langId));
+
+     t.commit();
+     dto->id = languageId;
+     dto->description = lang->name();
+    }
+    catch (const odb::exception& e)
+    {
+      cerr << e.what () << endl;
+      return createDtoResponse(Status::CODE_410,dto );
+    }
+    return createDtoResponse(Status::CODE_200, dto );
+  }
+
+  private:
+  OATPP_COMPONENT(std::shared_ptr<odb::core::database>, database_);
   
 };
 

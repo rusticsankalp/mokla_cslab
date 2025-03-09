@@ -57,6 +57,7 @@ int dbTest(int argc,char* argv[])
 {
   try
   {
+    /*
     unique_ptr<database> db (create_database (argc, argv));
     {
         transaction t (db->begin());
@@ -76,6 +77,7 @@ int dbTest(int argc,char* argv[])
 
         t.commit();
     }
+        */
     /*
 
     {

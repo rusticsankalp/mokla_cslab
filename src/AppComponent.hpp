@@ -9,6 +9,13 @@
 
 #include "oatpp/macro/component.hpp"
 
+#include <odb/database.hxx>
+#include <odb/session.hxx>
+#include <odb/transaction.hxx>
+#include <memory>
+
+#include "database.hxx" // create_database
+
 /**
  *  Class which creates and holds Application components and registers components in oatpp::base::Environment
  *  Order of components initialization is from top to bottom
@@ -21,6 +28,16 @@ public:
    */
   OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::network::ServerConnectionProvider>, serverConnectionProvider)([] {
     return oatpp::network::tcp::server::ConnectionProvider::createShared({"0.0.0.0", 8000, oatpp::network::Address::IP_4});
+  }());
+
+  /**
+   *  Create odb database provider
+   */
+  OATPP_CREATE_COMPONENT(std::shared_ptr<odb::core::database>, databaseConnector)([] {
+    //:Convert to config .. use test vars currently
+    std::shared_ptr<odb::core::database> database (new odb::pgsql::database ("postgres","pass","odb_test","ubuntumini2"));
+
+    return database;
   }());
   
   /**

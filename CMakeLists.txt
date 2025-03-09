@@ -39,6 +39,11 @@ target_compile_definitions(${project_name}-exe PRIVATE DATABASE_PGSQL)
 target_link_libraries(${project_name}-exe ${project_name}-lib)
 add_dependencies(${project_name}-exe ${project_name}-lib)
 
+#add_executable(${project_name}-driver  src/driver/driver.cpp )
+#target_compile_definitions(${project_name}-driver PRIVATE DATABASE_PGSQL)
+#target_link_libraries(${project_name}-driver ${project_name}-lib)
+#add_dependencies(${project_name}-driver ${project_name}-lib)
+
 set_target_properties(${project_name}-lib ${project_name}-exe PROPERTIES
         CXX_STANDARD 17
         CXX_EXTENSIONS OFF
