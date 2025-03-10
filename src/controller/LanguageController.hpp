@@ -2,21 +2,20 @@
 #define LanguageController_hpp
 
 #include <iostream>
-
 #include <memory>
-#include "dto/DTOs.hpp"
-#include "model.hpp"
-#include "model-odb.hxx"
 
-#include "oatpp/web/server/api/ApiController.hpp"
-#include "oatpp/macro/codegen.hpp"
-#include "oatpp/macro/component.hpp"
+#include <oatpp/web/server/api/ApiController.hpp>
+#include <oatpp/macro/codegen.hpp>
+#include <oatpp/macro/component.hpp>
 #include <odb/database.hxx>
 
-using namespace std;
-using namespace mokla::model;
-using namespace odb::core;
+#include "dto/dto.hpp"
+#include "model/entities/model.hpp"
+#include "model/orm/model-odb.hxx"
 
+using namespace std;
+using namespace odb::core;
+using namespace mokla::model;
 
 #include OATPP_CODEGEN_BEGIN(ApiController) //<-- Begin Codegen
 

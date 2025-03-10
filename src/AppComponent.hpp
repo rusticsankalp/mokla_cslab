@@ -1,20 +1,19 @@
 #ifndef AppComponent_hpp
 #define AppComponent_hpp
 
+#include <memory>
+
 #include "oatpp/web/server/HttpConnectionHandler.hpp"
 #include "oatpp/web/mime/ContentMappers.hpp"
-
 #include "oatpp/network/tcp/server/ConnectionProvider.hpp"
 #include "oatpp/json/ObjectMapper.hpp"
-
 #include "oatpp/macro/component.hpp"
 
 #include <odb/database.hxx>
 #include <odb/session.hxx>
 #include <odb/transaction.hxx>
-#include <memory>
 
-#include "database.hxx" // create_database
+#include "model/orm/database.hxx" // create_database
 
 /**
  *  Class which creates and holds Application components and registers components in oatpp::base::Environment

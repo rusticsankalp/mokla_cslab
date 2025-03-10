@@ -7,13 +7,15 @@ project(${project_name})
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories(${INCLUDE_DIR}
-    src/model
-    src/db)
+    src/model/entities
+    src/model/orm
+    src/dto
+)
 
 add_library(${project_name}-lib
+        src/model/orm/model-odb.cxx
+        src/model/persistence/orm-persist.cpp
         src/AppComponent.hpp
-        src/model/model-odb.cxx
-        src/db/database.hxx
 )
 
 ## link libs
@@ -35,7 +37,7 @@ target_include_directories(${project_name}-lib PUBLIC src)
 add_executable(${project_name}-exe
         src/App.cpp
 )
-target_compile_definitions(${project_name}-exe PRIVATE DATABASE_PGSQL)
+target_compile_definitions(${project_name}-lib PUBLIC DATABASE_PGSQL)
 target_link_libraries(${project_name}-exe ${project_name}-lib)
 add_dependencies(${project_name}-exe ${project_name}-lib)
 

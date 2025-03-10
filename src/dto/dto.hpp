@@ -1,5 +1,5 @@
-#ifndef DTOs_hpp
-#define DTOs_hpp
+#ifndef DTO_hpp
+#define DTO_hpp
 
 #include "oatpp/macro/codegen.hpp"
 #include "oatpp/Types.hpp"
