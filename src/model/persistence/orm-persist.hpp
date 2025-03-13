@@ -28,10 +28,22 @@ class OrmPersist
     */
 
     private:
-    template <typename T>
-    void runner()
+    template <typename Func>
+    auto DBExecutor(Func func)
     {
-
+        try
+        {
+          odb::core::transaction t(database_->begin());
+          auto result = func();      
+          t.commit();
+          
+          return result;
+        }
+        catch (const odb::exception& e)
+        {
+          //:Do something useful here, e.g. logging
+          throw;
+        }
     }
     std::shared_ptr<odb::core::database> database_;
 };
