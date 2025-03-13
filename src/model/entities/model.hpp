@@ -48,6 +48,10 @@ namespace mokla::model
   class Language
   {
     public:
+    Language(shared_ptr<Language> lptr)
+    {
+
+    }
     Language(const string name, const bool is_archived, const ELanguage_code language_code ) :
         name_{name}, is_archived_{is_archived},language_code_{language_code} 
         {}
@@ -68,8 +72,7 @@ namespace mokla::model
       NLOHMANN_DEFINE_TYPE_INTRUSIVE(Language, id_, name_,is_archived_,language_code_)
 
     private:
-      friend class odb::access;
-      
+      friend class odb::access;      
 
       #pragma db id auto
       long long id_{};

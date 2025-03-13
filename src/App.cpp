@@ -3,7 +3,7 @@
 #include "controller/LanguageController.hpp"
 #include "AppComponent.hpp"
 
-#include "oatpp/network/Server.hpp"
+#include "oatpp/base/Log.hpp"
 
 #include <nlohmann/json.hpp>
 
@@ -12,7 +12,8 @@
 void run() {
 
   /* Register Components in scope of run() method */
-  AppComponent components;
+  //:Make this name configurable
+  AppComponent components{"config.json"};
 
   /* Get router component */
   OATPP_COMPONENT(std::shared_ptr<oatpp::web::server::HttpRouter>, router);

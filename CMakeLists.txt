@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.25)
 
 set(project_name cslab) ## rename your project here
+set(CMAKE_BUILD_TYPE Debug)
 
 project(${project_name})
 
@@ -45,6 +46,10 @@ add_dependencies(${project_name}-exe ${project_name}-lib)
 #target_compile_definitions(${project_name}-driver PRIVATE DATABASE_PGSQL)
 #target_link_libraries(${project_name}-driver ${project_name}-lib)
 #add_dependencies(${project_name}-driver ${project_name}-lib)
+
+file(COPY ${CMAKE_SOURCE_DIR}/config.json
+    DESTINATION ${CMAKE_BINARY_DIR}
+)
 
 set_target_properties(${project_name}-lib ${project_name}-exe PROPERTIES
         CXX_STANDARD 17

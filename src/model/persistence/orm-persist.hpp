@@ -5,12 +5,30 @@
 #include <odb/transaction.hxx>
 
 #include "model/orm/database.hxx"
+#include "model/entities/model.hpp"
 
 class OrmPersist
 {
     public:
     OrmPersist(std::shared_ptr<odb::core::database> database);
 
+    //Languages
+    shared_ptr<mokla::model::Language> GetLanguageById(long long id);
+    vector<mokla::model::Language> GetAllActiveLanguages();
+
+    /*
+    //Problem
+    mokla::model::Problem GetProblemById(long long id);
+
+    //User
+    mokla::model::User GetUserByUserName(string username);
+    */
+
     private:
+    template <typename T>
+    void runner()
+    {
+
+    }
     std::shared_ptr<odb::core::database> database_;
 };

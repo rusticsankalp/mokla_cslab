@@ -1,0 +1,17 @@
+{
+    "database" : 
+    {
+        "username" : "postgres",
+        "password" : "pass",
+        "name"     : "odb_test",
+        "host"     : "ubuntumini2"
+    },
+    
+    "network" :
+    {
+        "address"  : "0.0.0.0",
+        "port"     : 8000
+    }
+}
+
+ 
