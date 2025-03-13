@@ -7,11 +7,13 @@
 #include <oatpp/web/server/api/ApiController.hpp>
 #include <oatpp/macro/codegen.hpp>
 #include <oatpp/macro/component.hpp>
+#include <oatpp/Types.hpp>
 #include <odb/database.hxx>
 
 #include "dto/dto.hpp"
 #include "model/entities/model.hpp"
 #include "model/orm/model-odb.hxx"
+#include "model/persistence/orm-persist.hpp" 
 
 using namespace std;
 using namespace odb::core;
@@ -34,39 +36,39 @@ public:
 public:
   
   ENDPOINT("GET", "languages", getLanguages) {
-    auto dto = LanguageDto::createShared();
-    dto->id = 2;
-    
-    return createDtoResponse(Status::CODE_200, dto);
+
+    //oatpp::Vector<oatpp::Object<LanguageDto>> result;
+    auto result = oatpp::Vector<oatpp::Object<LanguageDto>>::createShared();
+    //oatpp::Vector<LanguageDto> result{};   
+
+    //vector<LanguageDto> result{};   
+
+    auto languages = ormPersist_->GetAllActiveLanguages();
+    for(auto lang : languages)
+    {
+      auto dto = LanguageDto::createShared();
+      dto->id = lang->id();
+      dto->description = lang->name();
+      result->push_back(dto);
+    }   
+    return createDtoResponse(Status::CODE_200, result);
   }
   
   ENDPOINT("GET", "language/{languageId}", getLanguageById,
     PATH(Int32, languageId))
   {
-    
+    auto lang = ormPersist_->GetLanguageById(static_cast<long long>(languageId));
     auto dto = LanguageDto::createShared();
-    //long long langId = languageId.cast<long long>();
-    long long langId = static_cast<long long>(languageId);
-    try
-    {
-      transaction t (database_ ->begin());
-     //lang = make_unique<Language>(database_->load<Language>(languageId));
-     unique_ptr<Language> lang(database_->load<Language>(langId));
+    dto->id = lang->id();
+    dto->description = lang->name();
 
-     t.commit();
-     dto->id = languageId;
-     dto->description = lang->name();
-    }
-    catch (const odb::exception& e)
-    {
-      cerr << e.what () << endl;
-      return createDtoResponse(Status::CODE_410,dto );
-    }
     return createDtoResponse(Status::CODE_200, dto );
   }
 
   private:
   OATPP_COMPONENT(std::shared_ptr<odb::core::database>, database_);
+  OATPP_COMPONENT(std::shared_ptr<OrmPersist>, ormPersist_);
+  
   
 };
 

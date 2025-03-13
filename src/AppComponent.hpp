@@ -19,6 +19,7 @@
 #include <odb/transaction.hxx>
 
 #include "model/orm/database.hxx" // create_database
+#include "model/persistence/orm-persist.hpp" 
 
 class AppConfig
 {
@@ -57,9 +58,8 @@ class AppComponent {
 public:
 
   AppComponent(){}
-  AppComponent(string configFilePath) : configFilePath_{configFilePath}
-  {
-  }
+  AppComponent(string configFilePath) : 
+     configFilePath_{configFilePath} {}
 
   public:
     /**
@@ -67,7 +67,7 @@ public:
    */
   OATPP_CREATE_COMPONENT(std::shared_ptr<AppConfig>, appConfig)([this]{
 
-    //: this is too prone to failure. May be try catch or something else ?
+    //: this is too prone to failure. May be add try catch or something else ?
     ifstream ifs(configFilePath_);
     std::stringstream buffer;
     buffer << ifs.rdbuf();
@@ -101,6 +101,17 @@ public:
 
     return database;
   }());
+
+    /**
+   *  Create orm layer
+   */
+    OATPP_CREATE_COMPONENT(std::shared_ptr<OrmPersist>, ormPersist)([] {
+   
+    OATPP_COMPONENT(std::shared_ptr<odb::core::database>, databaseConnector);
+    auto ormPersist = make_shared<OrmPersist>(OrmPersist(databaseConnector));
+    return ormPersist;
+  }());
+
   
   /**
    *  Create Router component

@@ -1,3 +1,6 @@
+#ifndef OrmPersist_hpp
+#define OrmPersist_hpp
+
 #include <memory>
 
 #include <odb/database.hxx>
@@ -14,7 +17,7 @@ class OrmPersist
 
     //Languages
     shared_ptr<mokla::model::Language> GetLanguageById(long long id);
-    vector<mokla::model::Language> GetAllActiveLanguages();
+    vector<shared_ptr<mokla::model::Language>> GetAllActiveLanguages();
 
     /*
     //Problem
@@ -32,3 +35,4 @@ class OrmPersist
     }
     std::shared_ptr<odb::core::database> database_;
 };
+#endif

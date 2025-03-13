@@ -23,7 +23,7 @@ shared_ptr<mokla::model::Language> OrmPersist::GetLanguageById(long long id)
     transaction t(database_->begin());
 
     shared_ptr<Language> lang(database_->load<Language>(id));
-    Language language(lang);    
+    language = lang;   
 
     t.commit();
   }
@@ -35,7 +35,25 @@ shared_ptr<mokla::model::Language> OrmPersist::GetLanguageById(long long id)
   return language;
 }
 
-vector<Language> OrmPersist::GetAllActiveLanguages()
+vector<shared_ptr<mokla::model::Language>> OrmPersist::GetAllActiveLanguages()
 {
-    return vector<Language> {};
+    vector<shared_ptr<mokla::model::Language> >  languages{};
+    try 
+    {
+      transaction t(database_->begin());
+
+      using language_query = odb::query<Language>;
+
+      auto rows = database_->query<Language>(language_query::is_archived == false);
+      for(auto l: rows)
+      {
+        languages.push_back(make_shared<Language>(l));
+      }
+      t.commit();
+    }
+    catch (const odb::exception& e)
+    {
+      //:Do something useful here, e.g. logging
+    }
+    return languages;
 }

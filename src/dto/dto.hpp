@@ -4,6 +4,12 @@
 #include "oatpp/macro/codegen.hpp"
 #include "oatpp/Types.hpp"
 
+#include "model.hpp"
+
+using namespace std;
+using namespace odb::core;
+using namespace mokla::model;
+
 #include OATPP_CODEGEN_BEGIN(DTO)
 
 /**
@@ -16,7 +22,7 @@ class LanguageDto : public oatpp::DTO {
   
   DTO_FIELD(Int32, id);
   DTO_FIELD(String, description);
-  
+
 };
 
 #include OATPP_CODEGEN_END(DTO)
