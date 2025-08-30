@@ -2,10 +2,12 @@
 using namespace std;
 int main()
 {
-    int greatest = 0;
-    int least=1000000;
     int count;
     cin >> count;
+    int x;
+    cin >> x;
+    int greatest = x;
+    int least=x;
     int num;
     do
     {
